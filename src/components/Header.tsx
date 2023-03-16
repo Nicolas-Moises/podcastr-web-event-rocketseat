@@ -5,35 +5,13 @@ import logoHeader from '../assets/logo-header.svg'
 
 import { Lesson } from "./Lesson";
 
-import { gql, useQuery } from '@apollo/client'
-
-const GET_LESSONS_QUERY = gql`
-    query {
-        lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {
-          id
-          slug
-          title
-          availableAt
-          lessonType
-        }
-      }
-`
-
-interface GetLessonsQueryResponse {
-    lessons: {
-        id: string;
-        title: string;
-        slug: string;
-        availableAt: string;
-        lessonType: 'live' | 'class';
-    }[]
-}
+import { useGetLessonsQuery } from '../graphql/generated';
 
 export function Header() {
     const [toggleMenu, setToggleMenu] = useState(false);
     const [isActive, setIsActive] = useState(false);
 
-    const { data } = useQuery<GetLessonsQueryResponse>(GET_LESSONS_QUERY);
+    const { data } = useGetLessonsQuery()
 
     function handleActiveMenu() {
         if (!toggleMenu) {

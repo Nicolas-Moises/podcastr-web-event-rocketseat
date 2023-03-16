@@ -1,32 +1,10 @@
 import { Lesson } from "./Lesson";
 
-import { gql, useQuery } from '@apollo/client'
-
-const GET_LESSONS_QUERY = gql`
-    query {
-        lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {
-          id
-          slug
-          title
-          availableAt
-          lessonType
-        }
-      }
-`
-
-interface GetLessonsQueryResponse {
-    lessons: {
-        id: string;
-        title: string;
-        slug: string;
-        availableAt: string;
-        lessonType: 'live' | 'class';
-    }[]
-}
+import { useGetLessonsQuery } from "../graphql/generated";
 
 export function Sidebar() {
 
-    const { data } = useQuery<GetLessonsQueryResponse>(GET_LESSONS_QUERY);
+    const { data } = useGetLessonsQuery()
 
     return (
         <aside className="w-[348px] bg-gray-700 p-6 border-l border-gray-600 hidden md:block">

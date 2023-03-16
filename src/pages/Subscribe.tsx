@@ -6,15 +6,7 @@ import coldMockup from '../assets/cold-mockup.png';
 import reactIcon from '../assets/background-react.svg';
 import logoHeader from '../assets/logo-header.svg';
 import { Loading } from '../components/Loading';
-
-const CREATE_SUBSCRIBER_MUTATION = gql`
-    mutation CreateSubscriber ($name: String!, $email: String!) {
-        createSubscriber(data: {name: $name, email: $email}) {
-            id
-        }
-    }
-  
-`;
+import { useCreateSubscriberMutation } from '../graphql/generated';
 
 export function Subscribe() {
 
@@ -23,7 +15,7 @@ export function Subscribe() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
 
-    const [createSubscriber, { loading }] = useMutation(CREATE_SUBSCRIBER_MUTATION)
+    const [createSubscriber, { loading }] = useCreateSubscriberMutation()
 
     async function handleSubscribe(e: FormEvent) {
         e.preventDefault();
